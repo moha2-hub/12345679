@@ -1,29 +1,14 @@
 'use client'
 
 import { useEffect } from 'react'
-import { useSearchParams, useRouter } from 'next/navigation'
 import { logoutAction } from '../actions/logout'
 
-export const dynamic = 'force-dynamic' // Disable prerendering
 
 export default function LogoutPage() {
-  const searchParams = useSearchParams()
-  const router = useRouter()
-
   useEffect(() => {
-    logoutAction().then(() => {
-      const role = searchParams.get('role')
-      if (role === 'admin') {
-        router.replace('/admin')
-      } else if (role === 'seller') {
-        router.replace('/seller')
-      } else if (role === 'customer') {
-        router.replace('/customer')
-      } else {
-        router.replace('/')
-      }
-    })
-  }, [router, searchParams])
+    // Call the server action
+    logoutAction()
+  }, [])
 
   return (
     <div className="flex min-h-screen items-center justify-center">
