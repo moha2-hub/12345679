@@ -1,10 +1,11 @@
+// app/logout/LogoutHandler.tsx
 'use client'
 
 import { useEffect } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { logoutAction } from '../actions/logout'
 
-export default function LogoutPage() {
+export default function LogoutHandler() {
   const searchParams = useSearchParams()
   const router = useRouter()
 
