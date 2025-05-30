@@ -1,10 +1,19 @@
-import { Suspense } from 'react'
-import LoginHandler from './LoginHandler'
+'use client'
 
-export default function LoginPage() {
+import { useSearchParams } from 'next/navigation'
+import LoginForm from '@/components/LoginForm' // Replace this with your real form component
+
+export default function LoginHandler() {
+  const searchParams = useSearchParams()
+  const redirect = searchParams.get('redirect') ?? '/'
+
   return (
-    <Suspense fallback={<div className="text-center mt-10">Loading login...</div>}>
-      <LoginHandler />
-    </Suspense>
+    <div className="flex min-h-screen items-center justify-center">
+      {/* Replace with your real login UI */}
+      <div className="text-center">
+        <h1 className="text-2xl font-bold mb-4">Login</h1>
+        <LoginForm redirectTo={redirect} />
+      </div>
+    </div>
   )
 }
