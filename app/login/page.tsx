@@ -1,40 +1,11 @@
-// app/logout/LogoutHandler.tsx
-'use client'
+// app/login/page.tsx
+import { Suspense } from 'react'
+import LoginHandler from './LoginHandler'
 
-import { useEffect } from 'react'
-import { useSearchParams, useRouter } from 'next/navigation'
-import { logoutAction } from '../actions/logout'
-
-export default function LogoutHandler() {
-  const searchParams = useSearchParams()
-  const router = useRouter()
-
-  useEffect(() => {
-    const handleLogout = async () => {
-      await logoutAction()
-
-      const role = searchParams.get('role')
-      switch (role) {
-        case 'admin':
-          router.replace('/admin')
-          break
-        case 'seller':
-          router.replace('/seller')
-          break
-        case 'customer':
-          router.replace('/customer')
-          break
-        default:
-          router.replace('/')
-      }
-    }
-
-    handleLogout()
-  }, [router, searchParams])
-
+export default function LoginPage() {
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <span className="text-lg text-muted-foreground">Logging out...</span>
-    </div>
+    <Suspense fallback={<div className="text-center mt-10">Loading login...</div>}>
+      <LoginHandler />
+    </Suspense>
   )
 }
