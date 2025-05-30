@@ -1,30 +1,34 @@
 'use client'
+
 import { useEffect } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { logoutAction } from '../actions/logout'
 
-
 export default function LogoutPage() {
-  // Prevent SSR/prerender error by only rendering on the client
-  if (typeof window === 'undefined') return null
-
   const searchParams = useSearchParams()
   const router = useRouter()
 
   useEffect(() => {
-    // Call the server action
-    logoutAction().then(() => {
+    const handleLogout = async () => {
+      await logoutAction()
+
       const role = searchParams.get('role')
-      if (role === 'admin') {
-        router.replace('/admin')
-      } else if (role === 'seller') {
-        router.replace('/seller')
-      } else if (role === 'customer') {
-        router.replace('/customer')
-      } else {
-        router.replace('/')
+      switch (role) {
+        case 'admin':
+          router.replace('/admin')
+          break
+        case 'seller':
+          router.replace('/seller')
+          break
+        case 'customer':
+          router.replace('/customer')
+          break
+        default:
+          router.replace('/')
       }
-    })
+    }
+
+    handleLogout()
   }, [router, searchParams])
 
   return (
