@@ -1,24 +1,11 @@
-'use client'
-
-import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-import { logoutAction } from '../actions/logout'
+// app/logout/page.tsx
+import { Suspense } from 'react'
+import LogoutHandler from './LogoutHandler'
 
 export default function LogoutPage() {
-  const router = useRouter()
-
-  useEffect(() => {
-    const logoutAndRedirect = async () => {
-      await logoutAction()
-      router.replace('/login') // ✅ Redirect to login after logout
-    }
-
-    logoutAndRedirect()
-  }, [])
-
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <span className="text-lg text-muted-foreground">Logging out...</span>
-    </div>
+    <Suspense fallback={<div className="text-center mt-10">Loading...</div>}>
+      <LogoutHandler />
+    </Suspense>
   )
 }
