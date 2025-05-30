@@ -1,11 +1,13 @@
 'use client'
-import dynamic from 'next/dynamic'
-import { Suspense } from 'react'
+import { useEffect } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { logoutAction } from '../actions/logout'
 
 
-function LogoutPageInner() {
+export default function LogoutPage() {
+  // Prevent SSR/prerender error by only rendering on the client
+  if (typeof window === 'undefined') return null
+
   const searchParams = useSearchParams()
   const router = useRouter()
 
@@ -31,14 +33,3 @@ function LogoutPageInner() {
     </div>
   )
 }
-
-const LogoutPage = () => (
-  <Suspense>
-    <LogoutPageInner />
-  </Suspense>
-)
-
-export default dynamic(() => Promise.resolve(LogoutPage), {
-  ssr: false,
-  suspense: true,
-})
