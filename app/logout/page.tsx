@@ -1,13 +1,19 @@
 'use client'
 
 import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { logoutAction } from '../actions/logout'
 
-
 export default function LogoutPage() {
+  const router = useRouter()
+
   useEffect(() => {
-    // Call the server action
-    logoutAction()
+    const logoutAndRedirect = async () => {
+      await logoutAction()
+      router.replace('/login') // ✅ Redirect to login after logout
+    }
+
+    logoutAndRedirect()
   }, [])
 
   return (
